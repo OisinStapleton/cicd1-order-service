@@ -1,5 +1,6 @@
 package ie.atu.cicd1orderservice.service;
 
+import ie.atu.cicd1orderservice.dto.ProductResponse;
 import ie.atu.cicd1orderservice.model.PurchaseOrder;
 import ie.atu.cicd1orderservice.repository.PurchaseOrderRepository;
 import ie.atu.cicd1orderservice.service.client.CatalogClient;
@@ -29,7 +30,7 @@ public class PurchaseOrderService {
 
 
     @GetMapping("/test-catalog/{productId}")
-    public String testCatalogConnection(@PathVariable Long productId)
+    public ProductResponse testCatalogConnection(@PathVariable Long productId)
     {
         return catalogClient.getProductById(productId);
     }
