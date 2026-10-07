@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface CatalogClient {
     @GetMapping("/products/{id}")
     String getProductById(@PathVariable("id")Long id);
+
 }

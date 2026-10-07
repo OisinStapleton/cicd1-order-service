@@ -4,6 +4,8 @@ import ie.atu.cicd1orderservice.model.PurchaseOrder;
 import ie.atu.cicd1orderservice.repository.PurchaseOrderRepository;
 import ie.atu.cicd1orderservice.service.client.CatalogClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -25,7 +27,9 @@ public class PurchaseOrderService {
         return repository.save(order);
     }
 
-    public String testCatalogConnection(Long productId)
+
+    @GetMapping("/test-catalog/{productId}")
+    public String testCatalogConnection(@PathVariable Long productId)
     {
         return catalogClient.getProductById(productId);
     }
