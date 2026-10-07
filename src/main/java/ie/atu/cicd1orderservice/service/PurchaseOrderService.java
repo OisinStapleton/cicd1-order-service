@@ -1,23 +1,37 @@
 package ie.atu.cicd1orderservice.service;
 
+import ie.atu.cicd1orderservice.dto.ProductResponse;
 import ie.atu.cicd1orderservice.model.PurchaseOrder;
+import ie.atu.cicd1orderservice.repository.PurchaseOrderRepository;
+import ie.atu.cicd1orderservice.service.client.CatalogClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PurchaseOrderService {
-    private final List<PurchaseOrder> orders = new ArrayList<>();
-    private long nextId = 1;
+    private final PurchaseOrderRepository repository;
+    private final CatalogClient catalogClient;
 
+    public PurchaseOrderService(PurchaseOrderRepository repository, CatalogClient catalogClient) {
+        this.repository = repository;
+        this.catalogClient = catalogClient;
+    }
     public List<PurchaseOrder> getAll() {
-        return orders;
+        return repository.findAll();
     }
 
     public PurchaseOrder create(PurchaseOrder order) {
-        order.setId(nextId++);
-        orders.add(order);
-        return order;
+        order.setId(null);
+        return repository.save(order);
+    }
+
+
+    @GetMapping("/test-catalog/{productId}")
+    public ProductResponse testCatalogConnection(@PathVariable Long productId)
+    {
+        return catalogClient.getProductById(productId);
     }
 }
